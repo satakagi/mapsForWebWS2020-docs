@@ -1,5 +1,7 @@
 # Decentralized Web Mapping
 
+Satoru Takagi
+
 The WWW and the Internet were designed to be decentralized in the first place. I'm not going to spend a lot of time here enumerating the features and benefits that de-centralization gives rise to. At least for the users of geographic information, rather than the vendors of geographic information and their systems, we see decentralized forms of geographic information distribution and use as clearly preferable to centralized ones.
 This paper explores the centralized nature of current WebMap services, frameworks, and standards. We will then describe a methodology for transforming it into a de-centralized one. Finally, we will point out that that standardization should take place within the broader W3C, not within the geo industry.
 

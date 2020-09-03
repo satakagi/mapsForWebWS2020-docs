@@ -90,18 +90,27 @@ The Author considers that it needs to be flexible enough to allow more freedom i
 
 ## Tiling Framework as WebApps
 
-The Author has implemented a framework in SVGMap.js that satisfies this requirement of allowing diverse tiling.
-The architecture of this framework is also common to the architecture for facilitating the decentralization of maps described in another paper.
+The authors have implemented a framework in [SVGMap.js](http://svgmap.org/) that satisfies this requirement of allowing a variety of tiling schemes.
+The architecture of this framework is also common to the architecture for facilitating decentralization described in [another paper](de-centralized%20web%20mapping.md).
+As it is described in the chapter title, it is a mechanism that allows for the inclusion of javascript logic in map data and content.
 
-A descriptive format (image element or animation element) that refers to other graphics (be it SVG or bit-image) and sticks to a specified coordinate, which is standardized in SVG.
-and DOM APIs to control it with javascript are necessary features and specifications, most of which have already been standardized at the W3C.
-What is lacking in the Geo industry standards is the lack of the concept of including user logics with javascript as geospatial data.
+Traditionally, it seems to have been believed that any one of the several tiling algorithms mentioned so far would have to be determined and implemented through standardization. But in reality, there is a diversity of them, and this is what the existing framework looks like.
 
-As mentioned in the chapter title, it is a mechanism that allows for the inclusion of javascript logics in map data.
-According to this mechanism, WMTS, TMS, OpenStreetMapTile, and BingMapTile, which are all slightly but definitively different in their specifications, should only have their tile URL generation logic written with javascript. In fact, the author's SVGMap enterprise WebGIS has all of these different tiling logics working together.
+![Legacy web map tiling](imgs/tile_legacy.png)
+
+The concept of this framework, on the other hand, does not have the tiling algorithm itself in the framework, as mentioned earlier. Instead, the map data content is allowed to have javascript logic. You can then use it to add arbitrary tiling logic to your layers.
+
+![tile_legacy.png](imgs/tile_lawa.png)
+
+Here, the essential functional elements for building tiling logic are the ability to refer to other graphics (it can be SVG or bit image), which are standardized in SVG, and to paste them to a specified coordinate area, its description format (`image` element and `animation` element), the and DOM API to control it with javascript. However, most of them have already been standardized at the W3C.
+The major difference between the concept of previous Geo industry standards is the concept of including javascript logic as geospatial data and content.
+
+According to this approach, the petty but obviously speciﬁcally different WMTS, TMS, OpenStreetMapTile, and BingMapTile would only need to have their tile URL generation logic written with javascript. These logics are usually only a few dozen lines long and can be written in a few dozen lines.
+
+In fact, the enterprise WebGIS that the author is operating with SVGMap has all of this multispecies sometimes proprietary tiling logic running together. The number of layers is over 700.
 
 
-Examples of concrete data are shown below.
+### Examples of concrete data are shown below.
 
 Example 1: There are two ways to handle equally-divided tile pyramid data, such as WMTS, TMS, OpenStreetMapTile, and BingMapTile, in SVGMap. One is to statically expand them inline.
 ```

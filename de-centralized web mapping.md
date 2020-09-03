@@ -30,6 +30,7 @@ However, these are difficult to standardize as geographic information because of
 
 Schemes for setting these various parameters are outside the scope of what might be called a standard map API. Yes, these are issues that are beyond the scope of standardization in the context of geographic information. But that's effectively making web maps almost impossible to interoperate with, and the situation is that it's a centralized operation by web pages, portals and aggregators.
 
+![legacy web map site](imgs/dcwm_legacy.png)
 
 ### The problem of building in and spaghettiizing the website.
 
@@ -90,12 +91,16 @@ https://public-wms.met.no/verportal/verportal.map?
 If you go to these sites and do a network monitor, you'll see that GetCapabilities is never issued from the portal WebApps. In short, they are not used.
 
 But let's check it out.
-In NOAA nowcoast
+
+#### In NOAA nowcoast
 https://nowcoast.noaa.gov/arcgis/services/nowcoast/sat_meteo_imagery_time/MapServer/WmsServer?SERVICE=WMS&REQUEST=GetCapabilities
+
 Let's throw a What makes sense in the answer that comes back is the title attribute, which at best tells us what kind of title layer there is. The title is also extremely vague. It is difficult for the average user to get the information he or she wants. The now coast portal site has a much richer description of the site.
 
-Let's try the same thing on yr.no
+#### Let's try the same thing on yr.no
+
 https://public-wms.met.no/verportal/verportal.map?SERVICE=WMS&REQUEST=GetCapabilities ...
+
 It's the same kind of thing. It might be better to see a little useful information in the layer's name attribute. (The noaa one was just numbered.)
 
 Next, let's look at a token example.
@@ -118,16 +123,19 @@ https://xx.xx.xx.xx/arcgis/rest/services/Msil/TopographyAndGeology/MapServer/exp
 
 ## Propose an encapsulated web app that handles layers.
 
-The author has implemented the following scheme in [SVGMap.js](https://svgmap.org) in order to considerably improve the problems of this portal page. In this chapter, I will explain the method and propose a new standardization for web maps and GIS.
+The author has implemented the following scheme in [SVGMap.js](https://svgmap.org) in order to considerably improve the problems of this portal page. In this chapter, the author will explain the method and propose a new standardization for web maps and GIS.
 
 The author's thought is to encapsulate a mechanism for setting arbitrary parameters (which may include a UI) to generate layers as an architecture based on a web browser.
 It is important to note that such a mechanism should not interfere with the freedom to build a variety of logic, but at the same time, unlike GetCapabilities, it should be practical enough.
 In order to meet this requirement, the author has devised a mechanism to define encapsulated webApps to handle layers.
+
+![layers as webApps](imgs/dcwm_lawa.png)
+
 Here, webApps are things that can be interpreted, executed, and displayed by common web browsers, and there is no need for the geo industry to standardize everything in detail.
 
 The process, including the UI for setting arbitrary parameters needed to display each layer, is handled by webApps assigned to each layer, independent of the portal's Window object. to carry the container.
 
-SVGMap describes the XML <layer> tag returned by WMS's GetCapabilities and information corresponding to its child elements as SVG-based content. In other words, a layer is represented in the form of a single SVG file. Therefore, a layer is identified as the URL where the file is stored. Each layer is an identifier (URL) with no uncertain parameters. As a result, disclosing this URL to the user allows not the programmer but the average user to use the layer freely, independent of portal sites (just copy and paste the URL).
+SVGMap describes the XML `<layer>` tag returned by WMS's GetCapabilities and information corresponding to its child elements as SVG-based content. In other words, a layer is represented in the form of a single SVG file. Therefore, a layer is identified as the URL where the file is stored. Each layer is an identifier (URL) with no uncertain parameters. As a result, disclosing this URL to the user allows not the programmer but the average user to use the layer freely, independent of portal sites (just copy and paste the URL).
 
 
 Unlike the list element in WMS, in SVGMap, this layer SVG file has a link to HTML. This is the WebApps that control the layer-specific parameters described above.

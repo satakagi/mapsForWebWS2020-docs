@@ -5,6 +5,7 @@ Satoru Takagi
 ## Introduction
 
 The bit-image tile pyramid was made widely known by google Maps.
+![tile pyramid](imgs/tile_pyramid.png)
 It has since been used as a de-facto standard tiling method by osm, bingMaps, and many other web maps.
 
 wikipedia's [Tiled web map](https://en.wikipedia.org/wiki/Tiled_web_map) explains the situation relatively well.
@@ -19,7 +20,7 @@ In raster tiles, a relatively common tile scheme would be the following. From th
 
 Vector tiles, on the other hand, are much more confusing and disparate from service to service and vendor to vendor.
 
-In the meantime, I learned that the OGC has begun to look at standardizing it as a Vector Tiles Engineering Report and subsequent Vector Tiles Pilot ( though I am not a member of the OGC)
+In the meantime, author learned that the OGC has begun to look at standardizing it as a Vector Tiles Engineering Report and subsequent Vector Tiles Pilot ( though author is not a member of the OGC)
 
 The OGC's consideration of tiling appears to have been based on the raster data tile service standard WMTS and the on-demand vector data service standard WFS.
 
@@ -51,6 +52,8 @@ In the case of raster data, the maximum data size of a tile is determined by the
 Vectors, on the other hand, do not work that way. [Generalization](https://en.wikipedia.org/wiki/Cartographic_generalization) is essential for making tiles at the smaller scale level. However, it is a much more complex and uncertain process than raster data, requiring complex and advanced control over its logic in terms of individual data characteristics, visualization policies, and data size. [ESRI's guidebook may also be helpful](https://pro.arcgis.com/en/pro-app/help/mapping/map-authoring/author-a-map-for-vector-tile-creation.htm).
 Further complicating this problem is the fact that most features are highly non-uniform in geospatial terms, for example, point information for cities on Earth (which is almost non-existent at sea or in the nooks and crannies). For such data, the effectiveness of an equally divided tile pyramid is much more uncertain than for raster data. Anyone who has worked with real data should be able to understand this. At worst, if the generalizations fail at all, the equally divided tile pyramid is no longer effective at all.　Their report virtually ignores this problem.
 
+![vector tiling issues](imgs/tile_vector_issue.png)
+
 This problem seems to be exposed in subsequent reports as well, as shown below.
 Bit-image data is delivered as binary data with high data storage efficiency, in some cases irreversibly compressed.
 On the other hand, the author is experienced that the dominant format of vector data delivered by WFS, for example, is highly human readable, such as XML and JSON. The efficiency of storing these data is not so much, though there are some variations. They implicitly suggest that the further validation of delivering such inefficient data using an even less effective equally-divided tile pyramid has made it less practical.
@@ -59,6 +62,9 @@ Specifically, they were constrained to [mention the use of a combination of non-
 ## Quad Tree Tiling
 
 In order to keep the size of geospatially non-uniform vector tile data as constant as possible, which cannot be reduced even by generalization, some attempts have been made to introduce Quad Tree.
+
+![quad tree tiling](imgs/tile_qt.png)
+
 For example, 
 * [ESRI's guidebook and](https://desktop.arcgis.com/en/arcmap/10.3/tools/cartography-toolbox/create-cartographic-partitions.htm)
 * and the following articles It is featured in the stand.
@@ -71,7 +77,11 @@ However, this is not the enough to make appropriate data according to the displa
 ## Quad Tree Copposite Tiling
 
 The author has developed a method called Quad Tree Copposite Tiling that solves the problem in the previous section, and has accumulated a number of practical applications using this method.
-The method is described in the figure below, where the depth of the Quad Tree is assigned to the hierarchy of the pyramid. Once a full-resolution tile is generated, we do not generate a deeper tile, but use a shallower depth of the generated tile. Shallow depths (smaller scales), which are not capable of producing full-resolution tiles, should be constructed using some generalization method. An extreme but extremely hard-to-fail alternative to that method is to choose bit-images.
+The method is described in the figure below, where the depth of the Quad Tree is assigned to the hierarchy of the pyramid. 
+
+![quad tree composite tiling](imgs/tile_qtct.png)
+
+Once a full-resolution tile is generated, we do not generate a deeper tile, but use a shallower depth of the generated tile. Shallow depths (smaller scales), which are not capable of producing full-resolution tiles, should be constructed using some generalization method. An extreme but extremely hard-to-fail alternative to that method is to choose bit-images.
  (The author's open source implementation uses bit-images for small-scale tiles.) 
 
 The author has proven in a decade of practical use in the enterprise that mixed vector and raster tiles constructed in this way have a high degree of utility.

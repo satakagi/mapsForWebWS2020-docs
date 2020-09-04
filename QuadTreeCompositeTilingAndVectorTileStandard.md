@@ -77,9 +77,9 @@ For example,
 
 However, this is not the enough to make appropriate data according to the display scale. The reason is that the tile pyramid is not yet constructed.
 
-## Quad Tree Copposite Tiling
+## Quad Tree Composite Tiling
 
-The author has developed a method called Quad Tree Copposite Tiling that solves the problem in the previous section, and has accumulated a number of practical applications using this method.
+The author has developed a method called Quad Tree Composite Tiling that solves the problem in the previous section, and has accumulated a number of practical applications using this method.
 The method is described in the figure below, where the depth of the Quad Tree is assigned to the hierarchy of the pyramid. 
 
 ![quad tree composite tiling](imgs/tile_qtct.png)

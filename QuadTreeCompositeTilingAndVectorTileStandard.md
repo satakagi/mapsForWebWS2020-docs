@@ -20,11 +20,11 @@ In raster tiles, a relatively common tile scheme would be the following. From th
 
 Vector tiles, on the other hand, are much more confusing and disparate from service to service and vendor to vendor.
 
-In the meantime, author learned that the OGC has begun to look at standardizing it as a Vector Tiles Engineering Report and subsequent Vector Tiles Pilot ( though author is not a member of the OGC)
+In the meantime, author learned that the OGC has begun to look at standardizing it as a Vector Tiles Engineering Report and subsequent Vector Tiles Pilot ( though author is not a member of the OGC).
 
-The OGC's consideration of tiling appears to have been based on the raster data tile service standard WMTS and the on-demand vector data service standard WFS.
+The OGC's consideration of tiling appears to have been based on the raster data tile service standard [WMTS](https://www.ogc.org/standards/wmts) and the on-demand vector data service standard [WFS](https://www.ogc.org/standards/wfs).
 
-Their first report is [here](http://docs.opengeospatial.org/per/17-041.html), where their basic policy for vector tiling standards seems to have been decided.
+Their first report seems to be [here](http://docs.opengeospatial.org/per/17-041.html), where their basic policy for vector tiling standards seems to have been decided.
 The author, on the other hand, has a very different view of this policy, based on his practical experience.
 
 This paper points out the problems with the OGC's consideration of vector data tile standardization, and then presents a tiling method that we already have (for more than a decade) extensive operational experience with that can be eliminated.
@@ -33,12 +33,15 @@ It is also proposed as to how organizations should standardize tiling based on t
 
 
 ## Issues of standardization policy (tiling architecture) in the Report
+
 In OGC's [Chapter 6.4.3 of the Vector Tiles Engineering Report](http://docs.opengeospatial.org/per/17-041.html#_tiling_scheme_2), they provide a general tile for raster data They concluded that it is reasonable to apply essentially the same method to vectors as to pyramids, and their Vector Tiling standardization activities appear to be proceeding on this policy thereafter.
 The author do not think this conclusion is valid. The reasons for this are given below.
 
 The general tile pyramid for raster data here has the following tiling policies.
+
 - Uniform tile division regardless of location
 - Varying the number of tile divisions in proportion to the zoom level in a series of steps
+
 We will call such a tile pyramid an "equally divided tile pyramid" in this paper.
 
 
@@ -67,10 +70,10 @@ In order to keep the size of geospatially non-uniform vector tile data as consta
 
 For example, 
 * [ESRI's guidebook and](https://desktop.arcgis.com/en/arcmap/10.3/tools/cartography-toolbox/create-cartographic-partitions.htm)
-* and the following articles It is featured in the stand.
-  * https://pro.arcgis.com/en/pro-app/tool-reference/data-management/create-vector-tile-index.htm
-  * https://engblog.yext.com/post/geolocation-caching
-  * https://thoughtbot.com/blog/how-to-handle-large-amounts-of-data-on-maps ...
+* And the following articles It is featured in the stand.
+  * [ESRI's Create Vector Tile Index](https://pro.arcgis.com/en/pro-app/tool-reference/data-management/create-vector-tile-index.htm)
+  * [yext's blog: Improved Location Caching with Quadtrees](https://engblog.yext.com/post/geolocation-caching)
+  * [Theodore Calmes's blog: How To Efficiently Display Large Amounts of Data on iOS Maps](https://thoughtbot.com/blog/how-to-handle-large-amounts-of-data-on-maps)
 
 However, this is not the enough to make appropriate data according to the display scale. The reason is that the tile pyramid is not yet constructed.
 
@@ -82,7 +85,7 @@ The method is described in the figure below, where the depth of the Quad Tree is
 ![quad tree composite tiling](imgs/tile_qtct.png)
 
 Once a full-resolution tile is generated, we do not generate a deeper tile, but use a shallower depth of the generated tile. Shallow depths (smaller scales), which are not capable of producing full-resolution tiles, should be constructed using some generalization method. An extreme but extremely hard-to-fail alternative to that method is to choose bit-images.
- (The author's open source implementation uses bit-images for small-scale tiles.) 
+ ([The author's open source implementation](https://github.com/svgmap/svgMapTools) uses bit-images for small-scale tiles.) 
 
 The author has proven in a decade of practical use in the enterprise that mixed vector and raster tiles constructed in this way have a high degree of utility.
 
@@ -93,22 +96,22 @@ In addition, this method has the advantage that the total number of tiles can be
 
 ## The Importance of Diverse Tiling
 
-Now, it is important to note that equally-divided tile pyramids are not very effective, especially for vector tiles, and in some cases, there are many much better methods, such as Quad Tree Composite Tiling as implemented by the author, that are possible. In addition, there are cases where it is not possible to build a single data set as an equally divided tile pyramid for other reasons than performance and efficiency. Often, even though the local governments not only manage the data for the area, but also are responsible for data distribution, they are often provided with data that are considered to be part of a national dataset, and the tiles are no longer a jigsaw puzzle of random shapes. to be.
+Now, it is important to note that equally-divided tile pyramids are not very effective, especially for vector tiles, and in many cases, there are many much better methods, such as Quad Tree Composite Tiling as implemented by the author, that are possible. In addition, there are cases where it is not possible to build a single data set as an equally divided tile pyramid for other reasons than performance and efficiency.
+Often, even though the local governments not only manage the data for the area, but also are responsible for data distribution, they are often provided with data that are considered to be part of a national dataset. Then the tiles will tend to be made by each individual local government in their area of responsibility. Then it would be a jigsaw puzzle of random shapes.
 
-From the above, it is not very appropriate for the vector tiling standard to make equally divided tiling the only option that the OGC is now considering, and
-The Author considers that it needs to be flexible enough to allow more freedom in tiling compared to raster.
+From the above, it is not very appropriate for the vector tiling standard to make equally divided tiling the only option that the OGC is now considering, and the author considers that it needs to be flexible enough to allow more freedom in tiling compared to raster.
 
 ## Tiling Framework as WebApps
 
 The authors have implemented a framework in [SVGMap.js](http://svgmap.org/) that satisfies this requirement of allowing a variety of tiling schemes.
-The architecture of this framework is also common to the architecture for facilitating decentralization described in [another paper](de-centralized%20web%20mapping.md).
+The architecture of this framework is also common to the architecture for facilitating decentralization described in [another paper](de-centralizedWebMapping.md).
 As it is described in the chapter title, it is a mechanism that allows for the inclusion of javascript logic in map data and content.
 
 Traditionally, it seems to have been believed that any one of the several tiling algorithms mentioned so far would have to be determined and implemented through standardization. But in reality, there is a diversity of them, and this is what the existing framework looks like.
 
 ![Legacy web map tiling](imgs/tile_legacy.png)
 
-The concept of this framework, on the other hand, does not have the tiling algorithm itself in the framework, as mentioned earlier. Instead, the map data content is allowed to have javascript logic. You can then use it to add arbitrary tiling logic to your layers.
+The concept of this framework, on the other hand, does not have the tiling algorithms itself in the framework, as mentioned earlier. Instead, the map data content is allowed to have javascript logic. You can then use it to add arbitrary tiling logic to your layers.
 
 ![tile_legacy.png](imgs/tile_lawa.png)
 

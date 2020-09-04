@@ -104,7 +104,7 @@ From the above, it is not very appropriate for the vector tiling standard to mak
 ## Tiling Framework as WebApps
 
 The authors have implemented a framework in [SVGMap.js](http://svgmap.org/) that satisfies this requirement of allowing a variety of tiling schemes.
-The architecture of this framework is also common to the architecture for facilitating decentralization described in [another paper](de-centralizedWebMapping.md).
+The architecture of this framework is also common to the architecture for facilitating decentralization described in [another paper](De-centralizedWebMapping.md).
 As it is described in the chapter title, it is a mechanism that allows for the inclusion of javascript logic in map data and content.
 
 Traditionally, it seems to have been believed that any one of the several tiling algorithms mentioned so far would have to be determined and implemented through standardization. But in reality, there is a diversity of them, and this is what the existing framework looks like.
@@ -150,5 +150,5 @@ However, the architecture is based on a more generic, but very complex standard 
 
 The author has been holding this view of WebMapping since the early 2000's and has been keeping his activities away from the Geo industry for that reason. The fact that the W3C and the OGC will be holding the first joint workshop on WebMapping shows that the stakeholders are finally coming together on these issues.
 
-From the above, the author suggest that there needs to be a broader discussion that includes not only vector tiling but also the importance of decentralized web mapping, as suggested by the author in another paper.
+From the above, the author suggest that there needs to be a broader discussion that includes not only vector tiling but also the importance of decentralized web mapping, as suggested by the author in [another paper](De-centralizedWebMapping.md).
 The author also suggests that the Geo industry should participate in the W3C in order to make the various discussions on the standardization process more industry-neutral and more open-ended.

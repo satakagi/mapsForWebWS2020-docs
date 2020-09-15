@@ -2,13 +2,13 @@
 
 Satoru Takagi
 
-The WWW and the Internet were designed to be decentralized in the first place. I'm not going to spend a lot of time here enumerating the features and benefits that de-centralization gives rise to. At least for the users of geographic information, rather than the vendors of geographic information and their systems, we see decentralized forms of geographic information distribution and use as clearly preferable to centralized ones.
+The WWW and the Internet were designed to be decentralized in the first place. I'm not going to spend a lot of time here enumerating the features and benefits that de-centralization gives rise to. At least for those of us who are users of geographic information, rather than vendors of geographic information or systems, we see decentralized forms of geographic information distribution and use as much preferable to centralized ones.
 This paper explores the centralized nature of current WebMap services, frameworks, and standards. We will then describe a methodology for transforming it into a de-centralized one. Finally, we will point out that that standardization should take place within the broader W3C, not within the geo industry.
 
 
 ## The Situation of Centralized WebMapping
 
-Some of the OGC specifications have the word "Web" in them, such as [WMS](https://www.ogc.org/standards/wms) and [WFS](https://www.ogc.org/standards/wfs). Also, there are several specifications of tiled bit-image maps with the slang name of [WebMercator](https://wiki.openstreetmap.org/wiki/QuadTiles), which are widely used. ([TMS](https://wiki.openstreetmap.org/wiki/TMS),[WMTS](https://www.ogc.org/standards/wmts),[bingMapTiles](https://docs.microsoft.com/en-us/bingmaps/articles/bing-maps-tile-system),googleMapTile : [osgeo tiling standards](https://wiki.osgeo.org/wiki/TilingStandard)) Are they decentralized in operation?
+Some of the OGC specifications have the word "Web" in them, such as [WMS](https://www.ogc.org/standards/wms) and [WFS](https://www.ogc.org/standards/wfs). Also, there are several specifications of tiled bit-image maps with the slang name of [WebMercator](https://en.wikipedia.org/wiki/Tiled_web_map), which are widely used. ([OpenStreetMap](https://wiki.openstreetmap.org/wiki/QuadTiles), [TMS](https://wiki.openstreetmap.org/wiki/TMS),[WMTS](https://www.ogc.org/standards/wmts),[bingMapTiles](https://docs.microsoft.com/en-us/bingmaps/articles/bing-maps-tile-system),googleMapTile : [osgeo tiling standards](https://wiki.osgeo.org/wiki/TilingStandard)) Are they decentralized in operation?
 
 In general, a map site on the Web has a web page (home page) that serves as its own source of information for the people, and includes various geographical information (which is expressed as multiple layers of maps).
 
@@ -20,17 +20,18 @@ In addition, map sites that aggregate not only their own map data but also data 
 
 A common problem with all of these is the enclosure and siloing of the website portal. Existing standards for web mapping are largely powerless against this. In the first place, they have been standardized by vendors who aim to enclose themselves in these web portals.
 
-
+![silos](imgs/mapsilos.png)
 
 ## Technical Exploration of Centralization through Web Mapping Sites
 
-Let's try to decipher the technical reasons why web page portals can be enclosed by them.
+It's clear from the discussion so far what the target of the mapping portal is centralizing. It's the layers. Let's try to decipher the technical reasons why web page portals can be enclosed by them.
 
 The web pages of the web mapping site contain instructions and UI for proper use of each map layer. The mapping display conditions chosen by the user are communicated to the web service as necessary parameters behind the scenes to visualize the desired map.
 Parameters such as display range, zoom level and coordinate system have a largely unified concept within the scope of Geo industry standards. On the other hand, what kind of data and layers you want to visualize and under what conditions is essential.
 However, these are difficult to standardize as geographic information because of the diverse contexts in which the data is stored. These are what the Geo industry treats as optional arbitrary metadata or optional parameters. What these parameters are, and how and when they are set up to produce the output, are set up through the specific UI and js logic built into the homepage.　The same is true for access tokens, which are sent to the server as optional parameters for accessing geographic information through the token acquisition mechanism in the specific js logic built into the home page. The server uses the token as an authentication key to deliver the map data.
 
-Schemes for setting these various parameters are outside the scope of what might be called a standard map API. Yes, these are issues that are beyond the scope of standardization in the context of geographic information. But that's effectively making web maps almost impossible to interoperate with, and the situation is that it's a centralized operation by web pages, portals and aggregators.
+Schemes for setting these various parameters are outside the scope of what might be called a standard map API. Yes, these are issues that are beyond the scope of standardization in the context of geographic information. But this is just what makes Web Maps effectively impossible to interoperate with.
+It is siloed by the proprietary parameter generation logic and UI for map content generation built into each web map site's own web app, and the situation is that it's a centralized operation by web pages, portals and aggregators.
 
 ![legacy web map site](imgs/dcwm_legacy.png)
 
@@ -99,6 +100,37 @@ But let's check it out.
 [`https://nowcoast.noaa.gov/arcgis/services/nowcoast/sat_meteo_imagery_time/MapServer/WmsServer?SERVICE=WMS&REQUEST=GetCapabilities`](https://nowcoast.noaa.gov/arcgis/services/nowcoast/sat_meteo_imagery_time/MapServer/WmsServer?SERVICE=WMS&REQUEST=GetCapabilities
 )
 
+```XML
+<WMS_Capabilities ...>
+  <Service>...</Service>
+  <Capability>...
+    <Layer>
+      <Title><![CDATA[ NOAA NESDIS Geostationary Weather Satellite Imagery (Time Enabled) ]]></title>
+      ...
+      <Layer queryable="1">
+        <Title><![CDATA[ Global Shortwave Infrared Mosaic ]]></Title>
+        <Abstract><![CDATA[ ]]></Abstract>
+        <CRS>CRS:84</CRS>
+        ...
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.906642</westBoundLongitude>
+          <eastBoundLongitude>179.987720</eastBoundLongitude>
+          <southBoundLatitude>-72.735739</southBoundLatitude>
+          <northBoundLatitude>72.715408</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        ..
+        <Dimension name="time" units="ISO8601" current="1">2020-09-14T18:00:00.000Z/2020-09-15T06:00:00.000Z/</Dimension>
+        <Layer queryable="1">
+          <Name>1</Name>
+          <Title><![CDATA[ Image ]]></Title>
+          <Abstract><![CDATA[ sat_gmgsi_sir ]]></Abstract>
+        </Layer>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMS_Capabilities>
+```
+
 Let's throw a What makes sense in the answer that comes back is the title attribute, which at best tells us what kind of title layer there is. The title is also extremely vague. It is difficult for the average user to get the information he or she wants. The now coast portal site has a much richer description of the site.
 
 **Let's try the same thing on yr.no**
@@ -125,26 +157,35 @@ https://xx.xx.xx.xx/arcgis/rest/services/Msil/TopographyAndGeology/MapServer/exp
   f=image
 ```
 
+From the above, we can see that metadata describing layers (that is, XML replies to GeoCapabilities, RDF statements, etc.) are not useful for decentralization of map layers.
+
 
 ## Propose an encapsulated web app that handles layers
 
 The author has implemented the following scheme in [SVGMap.js](https://svgmap.org) in order to considerably improve the problems of this portal page. In this chapter, the author will explain the method and propose a new standardization for web maps and GIS.
 
-The author's thought is to encapsulate a mechanism for setting arbitrary parameters (which may include a UI) to generate layers as an architecture based on a web browser.
-It is important to note that such a mechanism should not interfere with the freedom to build a variety of logic, but at the same time, unlike GetCapabilities, it should be practical enough.
-In order to meet this requirement, the author has devised a mechanism to define encapsulated webApps to handle layers.
+First, back to what is actually being done on the Web Map site. We routinely set custom parameters for each layer by building WebApps that have their own logic and UI. The logic does not even use the metadata from GetCapabilities mentioned earlier.
+
+So, the author came up with the following thoughts.
+
+* The problem is that this proprietary logic is not on the layer side, but rather spaghettied into web pages, portals, and aggregators.
+* If this logic was separated into layers and then moved to each layer, the layers could be cleanly encapsulated.
+* As a result, the encapsulated layers could be decentralized.
+
+This approach would not prevent practical site construction, as it would only break down the existing map portal WebApps into layers. Of course, the logic could remain hard-coded and proprietary, so there is no need to standardize the vocabulary of metadata.
+
+To achieve this strategy, the author has devised a mechanism to handle the layers by defining individual logic separated by layers as small WebApps.
 
 ![layers as webApps](imgs/dcwm_lawa.png)
 
-Here, webApps are things that can be interpreted, executed, and displayed by common web browsers, and there is no need for the geo industry to standardize everything in detail.
+Here, such webApps are things that can be interpreted, executed, and displayed by common web browsers, and there is no need for the geo industry to standardize everything in detail.
 
 The process, including the UI for setting arbitrary parameters needed to display each layer, is handled by webApps assigned to each layer, independent of the portal's Window object. to carry the container.
-
 
 SVGMap describes the information as SVG-based content corresponding to the XML `<layer>` tag and its child elements returned by GetCapabilities of WMS. In other words, a layer is represented in the form of a single SVG file. Therefore, a layer is identified as the URL where the file is stored. Each layer is an identifier (URL) with no uncertain parameters. As a result, disclosing this URL to the user allows not the programmer but the average user to use the layer freely, independent of portal sites (just copy and paste the URL).
 
 
-Unlike the `<list>` element in WMS, SVGMap allows this layer SVG file to have a link to HTML. This html is the WebApps that control the layer-specific parameters described above.
+Unlike the `<list>` element in WMS, SVGMap allows this layer SVG file to have a link to HTML.(`data-controller` property in following example) This html is the WebApps that control the layer-specific parameters described above.
 
 The referenced HTML, on the other hand, has some extended APIs that allow you to set the layer-specific parameters at your disposal. In the case of SVGMap, this is the API for accessing the DOM of a layered SVG document.
 
@@ -152,9 +193,11 @@ This simple mechanism is all it takes to create a framework that allows you to f
 
 However, this has its challenges. This is the issue of limiting the operation of web applications by cross-origin. Basically, the API cross-origin, which allows DOM access to the aforementioned layer SVGs, does not work. The author currently cancels this problem with proxy, which is not a preferred method. Cross-origin access between HTML documents has a mechanism to authorize it, such as CORS, and such a mechanism for SVGs would be an improvement.
 
+`myLayer.svg`
+
 ```svg
 <?xml version="1.0" encoding="UTF-8"? >
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="4062 406 625 774" data-controller=" layerContro.html">
+<svg data-controller="myLayerController.html" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="4062 406 625 774">
   <globalCoordinateSystem srsName="http://purl.org/crs/84" transform="matrix(13.88888888888888889,0.0,0.0,-13.888888888888889,2500.0,1181. 2656774973138)"/>
   
   <image xlink:href="sc1_0_0_l4_Gsi/gsi_l4_13_5.png" preserveAspectRatio="none" x="4062.5" y="406.591052" width="312.5" height="205.509374 "/>
@@ -163,6 +206,8 @@ However, this has its challenges. This is the issue of limiting the operation of
   <image xlink:href="sc1_0_0_l4_Gsi/gsi_l4_14_6.png" preserveAspectRatio="none" x="4375" y="612.100427" width="312.5" height="264.40073"/>
 </svg>
 ```
+
+`myLayerController.html`
 
 ```html
 <!doctype html>
@@ -183,8 +228,8 @@ function changeMap(mapNumber){
 
 ## Standardization on W3C
 
-As mentioned above, these "arbitrary optional parameters" have been discarded as arbitrary because they are outside the scope of the Geo industry. In addition, the author proposed a framework for setting arbitrary parameters by WebApps without using semantics, which can be achieved by using HTML, CSS, and DOMAPI, which are web browser standards. In other words, the standard that is effective in "wrapping around the arbitrary parameters" is not something that can be managed by the Geo industry alone. 
+As mentioned above, these "arbitrary optional parameters" have been discarded as arbitrary because they are outside the scope of the Geo industry. However, it turns out that this has driven the centralization of WebMap. In addition, the author proposed a framework for setting arbitrary parameters by encapsulated WebApps without using semantics, which can be achieved by using HTML, CSS, and DOMAPI, which are web browser standards. In other words, the standard that is effective in "Siloing by arbitrary parameters" is not something that can be managed by the Geo industry alone. 
 
-On the side, this method proposed by the author may not be the only solution to the problems of centralization. However, the author has experienced that it is highly effective in practice.
+On the side, this method proposed by the author may not be the only solution to the problems of centralization. However, the author has confirmed from his practical experience that it is highly effective.
 
 From the above, it is the author's opinion that it is appropriate for the W3C to work on the quest and standardization that promotes the decentralization of WebMapping.

@@ -115,7 +115,11 @@ The concept of this framework, on the other hand, does not have the tiling algor
 
 ![tile_legacy.png](imgs/tile_lawa.png)
 
-Here, the essential functional elements for building tiling logic are the ability to refer to other graphics (it can be SVG or bit image), which are standardized in SVG, and to paste them to a specified coordinate area, its description format (`image` element and `animation` element), the and DOM API to control it with javascript. However, most of them have already been standardized at the W3C.
+Here, the essential functional elements for building tiling logic are the ability to refer to other graphics (it can be SVG or bit image), which are standardized in SVG, and to embed them to a specified coordinate area, its description format (`image` element and `animation` element), the and DOM API to control it with javascript.
+
+![Embed image](imgs/SVG_TileFunc1.png)
+
+However, most of them have already been standardized at the W3C.
 The major difference between the concept of previous Geo industry standards is the concept of including javascript logic as geospatial data and content.
 
 According to this approach, the petty but obviously speciﬁcally different WMTS, TMS, OpenStreetMapTile, and BingMapTile would only need to have their tile URL generation logic written with javascript. These logics are usually only a few dozen lines long and can be written in a few dozen lines.
@@ -125,12 +129,30 @@ In fact, the enterprise WebGIS that the author is operating with SVGMap has all 
 
 ### Examples of concrete data are shown below.
 
-Example 1: There are two ways to handle equally-divided tile pyramid data, such as WMTS, TMS, OpenStreetMapTile, and BingMapTile, in SVGMap. One is to statically expand them inline.
-```
-TBD
-```
+#### Example 1:
 
-Example 2: The other is to include logic in the layer with javascript defining the structure of the tile pyramid (it's a simple sequence-like function, so it can be written in a few dozen lines of short logic)
+ There are two ways to handle equally-divided tile pyramid data, such as WMTS, TMS, OpenStreetMapTile, and BingMapTile, in SVGMap. One is to statically expand them inline.
+
+![staticTilePyramid1](imgs/SVGtilePyramid1.png)
+![staticTilePyramid2](imgs/SVGtilePyramid2.png)
+
+For this kind of data with a tile pyramid structure, only two more functions need to be implemented in js. One is a function to switch the display state according to the visibleMin/MaxZoom attribute. 
+
+![Embed image](imgs/SVG_TileFunc2.png)
+
+The other is a function for dynamically loading only the resources displayed on the screen.
+
+![Embed image](imgs/SVG_TileFunc3.png)
+
+However, in SVGMap.js, these two functions are implemented within the framework.
+
+Note that, the in-line deployment of such tiles may seem inefficient at first glance, but this is not always the case.　Most geographic information has an irregularly shaped area, not a square area. So if you only manage areas of geographic information in bounding boxes (which WMS GetCapabilities does), tile expansion with a sequence function like the one shown in the next section, will in many cases result in inefficient http requests outside the effective area.
+
+
+#### Example 2:
+
+ The other is to include logic in the layer with javascript defining the structure of the tile pyramid (it's a simple sequence-like function, so it can be written in a few dozen lines of short logic)
+ 
 ```
 TBD
 ```

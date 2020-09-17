@@ -144,20 +144,64 @@ The other is a function for dynamically loading only the resources displayed on 
 
 ![Embed image](imgs/SVG_TileFunc3.png)
 
-However, in SVGMap.js, these two functions are implemented within the framework.
+However, in SVGMap.js, these two functions are implemented within the framework. The reason for this is that these features are not map-specific, and because they have been discussed in several W3C groups for standardization, they are considered appropriate as standard features of the framework.
 
-Note that, the in-line deployment of such tiles may seem inefficient at first glance, but this is not always the case.　Most geographic information has an irregularly shaped area, not a square area. So if you only manage areas of geographic information in bounding boxes (which WMS GetCapabilities does), tile expansion with a sequence function like the one shown in the next section, will in many cases result in inefficient http requests outside the effective area.
+Note that, the in-line deployment of such tiles may seem inefficient at first glance, but this is not always the case.　Most geographic information has an irregularly shaped area, not a square area. So if you only manage areas of geographic information in bounding boxes (which WMS GetCapabilities does), tile expansion with a sequence function like the one shown in the next section, will in many cases result in inefficient http requests outside the effective area. With in-line deployed data, such inefficiencies are essentially non-existent.
 
 
 #### Example 2:
 
  The other is to include logic in the layer with javascript defining the structure of the tile pyramid (it's a simple sequence-like function, so it can be written in a few dozen lines of short logic)
  
-```
-TBD
+```html
+<!doctype html>
+<html>
+<head>
+<title>tile generation test</title>
+</head>
+
+<script>
+var baseURL="https://tile.openstreetmap.org/[level]/[tx]/[ty].png";
+
+var level = 8;
+var d2r = Math.PI / 180;
+viewPort = {x0:133 , y0:33 , x1:138 , y1:38 }; // in y:lat, x:lng
+
+onload=function(){
+	generateTilsURLs(level,viewPort);
+}
+
+function lat2y(lat) { return(Math.log(Math.tan((lat / 90 + 1) * (Math.PI / 4) )) * 180 / Math.PI); }
+function crd2tile(crd,zoom) { return(Math.floor((crd+180)/360*Math.pow(2,zoom))); }
+function lng2tile(lng,zoom) { return(crd2tile(lng,zoom)); }
+function lat2tile(lat,zoom) { return(Math.pow(2,zoom) -1 -crd2tile(lat2y(lat),zoom) ); }
+
+function generateTilsURLs(zoom,viewPort){
+	var tileSpan = 360 / Math.pow(2,zoom);
+	var tl = {x:lng2tile(viewPort.x0, zoom), y:lat2tile(viewPort.y1, zoom)}
+	var br = {x:lng2tile(viewPort.x1, zoom), y:lat2tile(viewPort.y0, zoom)}
+	var svgmap = document.getElementById("svgMap");
+	svgmap.setAttribute("viewBox",viewPort.x0+" "+(-lat2y(viewPort.y1))+" "+(viewPort.x1-viewPort.x0)+" "+(lat2y(viewPort.y1)-lat2y(viewPort.y0)));
+	var contents='<globalCoordinateSystem srsName="http://purl.org/crs/84" transform="mercator" />';
+	for ( var ty = tl.y ; ty <= br.y ; ty++ ){
+		for ( var tx = tl.x ; tx <= br.x ; tx++ ){
+			var tileURL = ((baseURL.replace("[level]",zoom)).replace("[ty]",ty)).replace("[tx]",tx);
+			var mecratorCoordinatesBox = {x:tx*tileSpan-180, y:180-ty*tileSpan, width:tileSpan, height:tileSpan};
+			contents+='<image x="'+ mecratorCoordinatesBox.x +'" y="'+(-mecratorCoordinatesBox.y)+'" width="'+mecratorCoordinatesBox.width+'" height="'+mecratorCoordinatesBox.height+'" xlink:href="'+tileURL+'"/>';
+		}
+	}
+	svgmap.innerHTML=contents;
+}
+</script>
+<body>
+<svg id="svgMap" width="800" height="800"></svg>
+</body>
+</html>
 ```
 
-Example 3: Quad Tree Composite Tiling data is easy to use for static inline expansion because it is a random tile split based on location. Since the number of tiles can often be significantly reduced to start with, the increase in hyperlinks due to inline expansion is not a serious concern.
+#### Example 3:
+
+ Quad Tree Composite Tiling data is easy to use for static inline expansion because it is a random tile split based on location. Since the number of tiles can often be significantly reduced to start with, the increase in hyperlinks due to inline expansion is not a serious concern.
 ```
 TBD
 ```

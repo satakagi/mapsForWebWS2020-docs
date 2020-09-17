@@ -202,11 +202,43 @@ function generateTilsURLs(zoom,viewPort){
 #### Example 3:
 
  Quad Tree Composite Tiling data is easy to use for static inline expansion because it is a random tile split based on location. Since the number of tiles can often be significantly reduced to start with, the increase in hyperlinks due to inline expansion is not a serious concern.
-```
-TBD
-```
 
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<svg  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:go="http://purl.org/svgmap/profile" viewBox="12375.0 -5625.0 2250.0 3375.0" go:dataArea="12375.0 -5625.0 2250.0 3375.0" >
+<globalCoordinateSystem srsName="http://purl.org/crs/84" transform="matrix(100.0,0.0,0.0,-100.0,0.0,0.0)" />
+<!-- LEVEL: 0 -->
+<animation xlink:href="Self-GS-POI-b_1-0.svg" x="13500" y="-5625" width="1125" height="1125" visibleMinZoom="35.55"/>
+<image xlink:href="Self-GS-POI-b/lvl5/tile1_0.png" preserveAspectRatio="none" x="13500" y="-5625" width="1125" height="1125" visibleMaxZoom="35.55"/>
+<animation xlink:href="Self-GS-POI-b_0-1.svg" x="12375" y="-4500" width="1125" height="1125" visibleMinZoom="35.55"/>
+<image xlink:href="Self-GS-POI-b/lvl5/tile0_1.png" preserveAspectRatio="none" x="12375" y="-4500" width="1125" height="1125" visibleMaxZoom="35.55"/>
+<image xlink:href="Self-GS-POI-b/lvl5/tile1_1.png" preserveAspectRatio="none" x="13500" y="-4500" width="1125" height="1125" visibleMaxZoom="35.55"/>
+<animation xlink:href="Self-GS-POI-b_0-2.svg" x="12375" y="-3375" width="1125" height="1125" visibleMinZoom="35.55"/>
+<image xlink:href="Self-GS-POI-b/lvl5/tile0_2.png" preserveAspectRatio="none" x="12375" y="-3375" width="1125" height="1125" visibleMaxZoom="35.55"/>
+<animation xlink:href="Self-GS-POI-b_1-2.svg" x="13500" y="-3375" width="1125" height="1125" visibleMinZoom="35.55"/>
+<image xlink:href="Self-GS-POI-b/lvl5/tile1_2.png" preserveAspectRatio="none" x="13500" y="-3375" width="1125" height="1125" visibleMaxZoom="35.55"/>
+<!-- LEVEL: 1 -->
+<animation xlink:href="Self-GS-POI-b_l1_2-2.svg" x="13500" y="-4500" width="562.5" height="562.5" visibleMinZoom="71.11"/>
+<image xlink:href="Self-GS-POI-b/lvl6/tile2_2.png" preserveAspectRatio="none" x="13500" y="-4500" width="562.5" height="562.5" visibleMinZoom="35.555" visibleMaxZoom="71.11"/>
+<animation xlink:href="Self-GS-POI-b_l1_3-2.svg" x="14062.5" y="-4500" width="562.5" height="562.5" visibleMinZoom="71.11"/>
+<image xlink:href="Self-GS-POI-b/lvl6/tile3_2.png" preserveAspectRatio="none" x="14062.5" y="-4500" width="562.5" height="562.5" visibleMinZoom="35.555" visibleMaxZoom="71.11"/>
+<image xlink:href="Self-GS-POI-b/lvl6/tile2_3.png" preserveAspectRatio="none" x="13500" y="-3937.5" width="562.5" height="562.5" visibleMinZoom="35.555" visibleMaxZoom="71.11"/>
+<animation xlink:href="Self-GS-POI-b_l1_3-3.svg" x="14062.5" y="-3937.5" width="562.5" height="562.5" visibleMinZoom="71.11"/>
+<image xlink:href="Self-GS-POI-b/lvl6/tile3_3.png" preserveAspectRatio="none" x="14062.5" y="-3937.5" width="562.5" height="562.5" visibleMinZoom="35.555" visibleMaxZoom="71.11"/>
+<!-- LEVEL: 2 -->
+<animation xlink:href="Self-GS-POI-b_l2_4-6.svg" x="13500" y="-3937.5" width="281.25" height="281.25" visibleMinZoom="142.22"/>
+<image xlink:href="Self-GS-POI-b/lvl7/tile4_6.png" preserveAspectRatio="none" x="13500" y="-3937.5" width="281.25" height="281.25" visibleMinZoom="71.11" visibleMaxZoom="142.22"/>
+<animation xlink:href="Self-GS-POI-b_l2_5-6.svg" x="13781.25" y="-3937.5" width="281.25" height="281.25" visibleMinZoom="142.22"/>
+<image xlink:href="Self-GS-POI-b/lvl7/tile5_6.png" preserveAspectRatio="none" x="13781.25" y="-3937.5" width="281.25" height="281.25" visibleMinZoom="71.11" visibleMaxZoom="142.22"/>
+<animation xlink:href="Self-GS-POI-b_l2_4-7.svg" x="13500" y="-3656.25" width="281.25" height="281.25" visibleMinZoom="142.22"/>
+<image xlink:href="Self-GS-POI-b/lvl7/tile4_7.png" preserveAspectRatio="none" x="13500" y="-3656.25" width="281.25" height="281.25" visibleMinZoom="71.11" visibleMaxZoom="142.22"/>
+<animation xlink:href="Self-GS-POI-b_l2_5-7.svg" x="13781.25" y="-3656.25" width="281.25" height="281.25" visibleMinZoom="142.22"/>
+<image xlink:href="Self-GS-POI-b/lvl7/tile5_7.png" preserveAspectRatio="none" x="13781.25" y="-3656.25" width="281.25" height="281.25" visibleMinZoom="71.11" visibleMaxZoom="142.22"/>
+</svg>
+```
+![Quad Tree Composite Tile Example](imgs/QTCT.png)
 
+In this example, building an equally divided tile pyramid would require 105 resources ((1+4+16)*5), while Quad Tree Composite Tiling allows you to build a pyramid with only 25 resources includeing container file.
 
 ## Discussion on standardization
 

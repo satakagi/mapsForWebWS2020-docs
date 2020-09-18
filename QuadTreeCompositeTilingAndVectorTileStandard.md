@@ -1,6 +1,6 @@
 # Quad Tree Composite Tiling and the standardization of tiling
 
-Satoru Takagi
+Satoru Takagi ([satakagi](https://github.com/satakagi))
 
 ## Introduction
 
@@ -93,6 +93,14 @@ In particular, the use of rasters as small-scale tiles may lead to a loss of fea
 However, in terms of the more complex concept of features, raster data can be interpreted as a feature called "coverage" in the form of a grid, which is a simple and unbreakable type of generalization.
 In addition, this method has the advantage that the total number of tiles can be reduced considerably compared to raster tile pyramids.
 
+### Demos
+As you zoom in, the bit-image tiles turn into vector tiles, depending on the density of the data.
+
+* [Lots of Points](https://svgmap.org/devinfo/devkddi/lvl0.1/demos/QTCT_exp.html#visibleLayer=worldcities) 
+  * Note: The points are arranged in a grid pattern because of the resolution of the original data
+* [Linstring](https://svgmap.org/devinfo/devkddi/lvl0.1/demos/QTCT_exp.html#visibleLayer=BusRouteJA) 
+  * Note: When it changes to vector tiles, clickable anchor points appear.
+
 
 ## The Importance of Diverse Tiling
 
@@ -129,7 +137,7 @@ In fact, the enterprise WebGIS that the author is operating with SVGMap has all 
 
 ### Examples of concrete data are shown below.
 
-#### Example 1:
+#### Example 1: Inline deployed equally divided tile pyramid
 
  There are two ways to handle equally-divided tile pyramid data, such as WMTS, TMS, OpenStreetMapTile, and BingMapTile, in SVGMap. One is to statically expand them inline.
 
@@ -149,7 +157,7 @@ However, in SVGMap.js, these two functions are implemented within the framework.
 Note that, the in-line deployment of such tiles may seem inefficient at first glance, but this is not always the case.　Most geographic information has an irregularly shaped area, not a square area. So if you only manage areas of geographic information in bounding boxes (which WMS GetCapabilities does), tile expansion with a sequence function like the one shown in the next section, will in many cases result in inefficient http requests outside the effective area. With in-line deployed data, such inefficiencies are essentially non-existent.
 
 
-#### Example 2:
+#### Example 2: Equally divided tile pyramid generated dynamically by javascript
 
  The other is to include logic in the layer with javascript defining the structure of the tile pyramid (it's a simple sequence-like function, so it can be written in a few dozen lines of short logic)
  
@@ -199,7 +207,7 @@ function generateTilsURLs(zoom,viewPort){
 </html>
 ```
 
-#### Example 3:
+#### Example 3: Inline deployed Quad Tree Composite Tiles
 
  Quad Tree Composite Tiling data is easy to use for static inline expansion because it is a random tile split based on location. Since the number of tiles can often be significantly reduced to start with, the increase in hyperlinks due to inline expansion is not a serious concern.
 

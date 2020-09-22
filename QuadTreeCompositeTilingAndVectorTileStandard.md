@@ -119,7 +119,7 @@ Traditionally, it seems to have been believed that any one of the several tiling
 
 ![Legacy web map tiling](imgs/tile_legacy.png)
 
-The concept of this framework, on the other hand, does not have the tiling algorithms itself in the framework, as mentioned earlier. Instead, the map data content is allowed to have javascript logic. You can then use it to add arbitrary tiling logic to your layers.
+The concept of this framework, on the other hand, does not have the tiling algorithms itself in the framework, as mentioned earlier. Instead, the map content is built as webApps based on the basic hyperdocument rules, which can include arbitrary JavaScript logic. You can then use it to add arbitrary tiling logic to your layers.
 
 ![tile_legacy.png](imgs/tile_lawa.png)
 

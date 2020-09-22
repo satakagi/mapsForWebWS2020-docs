@@ -152,7 +152,7 @@ For this kind of data with a tile pyramid structure, only two more functions nee
 
 ![Embed image](imgs/SVG_TileFunc2.png)
 
-The other is a function for dynamically loading only the resources displayed on the screen.
+The other is a function for dynamically loading only the resources displayed on the screen. It's known as a feature called Lazy Load for web content.
 
 ![Embed image](imgs/SVG_TileFunc3.png)
 

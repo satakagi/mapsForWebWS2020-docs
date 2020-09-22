@@ -148,7 +148,7 @@ As you'll notice from this example, the individual tile contents are only refere
 
 Incidentally, few specifications exist for web browsers that bind URL naming rules for special purposes. That's also why the author considers the idea of making URL naming rules tied to a tiling scheme the only standard for web browsers to be poorly suited to web browser specifications. Of course, specifications that require dynamic server implementation are even less suitable.
 
-For this kind of data with a tile pyramid structure, only two more functions need to be implemented in js. One is a function to switch the display state according to the visibleMin/MaxZoom attribute. 
+For this kind of data with a tile pyramid structure, only two more functions need to be implemented in js. One is a function to switch the display state according to the visibleMin/MaxZoom attribute. It's what's called the Level Of Details.
 
 ![Embed image](imgs/SVG_TileFunc2.png)
 

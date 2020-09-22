@@ -18,7 +18,7 @@ In raster tiles, a relatively common tile scheme would be the following. From th
 * [WMTS](https://en.wikipedia.org/wiki/Web_Map_Tile_Service)
 
 
-Vector tiles, on the other hand, are much more confusing and disparate from service to service and vendor to vendor.
+Vector tiles, on the other hand, are much more confusing and disparate from service to service and vendor to vendor. Even the description format of the feature, GeoJSON is used relatively more often than others, but there are many different ones such as KML, WKT, wild CSV and XML, and JSON.
 
 In the meantime, author learned that the OGC has begun to look at standardizing it as a Vector Tiles Engineering Report and subsequent Vector Tiles Pilot ( though author is not a member of the OGC).
 

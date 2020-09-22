@@ -135,16 +135,18 @@ According to this approach, the petty but obviously speciﬁcally different WMTS
 In fact, the enterprise WebGIS that the author is operating with SVGMap has all of this multispecies sometimes proprietary tiling logic running together. The number of layers is over 700.
 
 
-### Examples of concrete data are shown below.
+### Cases of concrete data are shown below.
 
-#### Example 1: Inline deployed equally divided tile pyramid
+#### Case 1: Inline deployed equally divided tile pyramid
 
  There are two ways to handle equally-divided tile pyramid data, such as WMTS, TMS, OpenStreetMapTile, and BingMapTile, in SVGMap. One is to statically expand them inline.
 
 ![staticTilePyramid1](imgs/SVGtilePyramid1.png)
 ![staticTilePyramid2](imgs/SVGtilePyramid2.png)
 
-As you'll notice from this example, the individual tile contents are only referenced by basic hyperlinks. In other words, we don't need any rules to bind the naming of tile data URLs. It means that it's not a problem to simply put the tile content as static files on the most basic static web server. Of course, you are free to deploy the tile pyramid structure in any URL, be it WMTS, Silppy Tile or Bing TIile, or whatever. Of course you are free to choose to connect to any dynamic service you can think of. You'll find that the scope of application is much larger than standards bound by web service APIs that are only available on dynamic servers. By the way, the demo content in the previous chapter is delivered on a static web server with no dynamic services.
+As you'll notice from this example, the individual tile contents are only referenced by basic hyperlinks. In other words, we don't need any rules to bind the naming of tile data URLs. It means that it's not a problem to simply put the tile content as static files on the most basic static web server. Of course, you are free to deploy the tile pyramid structure in any URL, be it WMTS, Silppy Tile or Bing Tile, or whatever. Of course you are free to choose to connect to any dynamic service you can think of. You'll find that the scope of application is much larger than standards bound by web service APIs that are only available on dynamic servers. By the way, the demo content in the previous chapter is delivered on a static web server with no dynamic services.
+
+Incidentally, few specifications exist for web browsers that bind URL naming rules for special purposes. That's also why the author considers the idea of making URL naming rules tied to a tiling scheme the only standard for web browsers to be poorly suited to web browser specifications. Of course, specifications that require dynamic server implementation are even less suitable.
 
 For this kind of data with a tile pyramid structure, only two more functions need to be implemented in js. One is a function to switch the display state according to the visibleMin/MaxZoom attribute. 
 
@@ -159,7 +161,7 @@ However, in SVGMap.js, these two functions are implemented within the framework.
 Note that, the in-line deployment of such tiles may seem inefficient at first glance, but this is not always the case.　Most geographic information has an irregularly shaped area, not a square area. So if you only manage areas of geographic information in bounding boxes (which WMS GetCapabilities does), tile expansion with a sequence function like the one shown in the next section, will in many cases result in inefficient http requests outside the effective area. With in-line deployed data, such inefficiencies are essentially non-existent.
 
 
-#### Example 2: Equally divided tile pyramid generated dynamically by javascript
+#### Case 2: Equally divided tile pyramid generated dynamically by javascript
 
  The other is to include logic in the layer with javascript defining the structure of the tile pyramid (it's a simple sequence-like function, so it can be written in a few dozen lines of short logic)
  
@@ -209,7 +211,7 @@ function generateTilsURLs(zoom,viewPort){
 </html>
 ```
 
-#### Example 3: Inline deployed Quad Tree Composite Tiles
+#### Case 3: Inline deployed Quad Tree Composite Tiles
 
  Quad Tree Composite Tiling data is easy to use for static inline expansion because it is a random tile split based on location. Since the number of tiles can often be significantly reduced to start with, the increase in hyperlinks due to inline expansion is not a serious concern.
 

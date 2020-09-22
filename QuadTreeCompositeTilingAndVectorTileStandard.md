@@ -115,7 +115,7 @@ The authors have implemented a framework in [SVGMap.js](http://svgmap.org/) that
 The architecture of this framework is also common to the architecture for facilitating decentralization described in [another paper](De-centralizedWebMapping.md).
 As it is described in the chapter title, it is a mechanism that allows for the inclusion of javascript logic in map data and content.
 
-Traditionally, it seems to have been believed that any one of the several tiling algorithms mentioned so far would have to be determined and implemented through standardization. But in reality, there is a diversity of them, and this is what the existing framework looks like.
+Traditionally, it seems to have been believed that any one of the several tiling algorithms with URL naming rules or an http query scheme mentioned so far would have to be determined and implemented through standardization. But in reality, there is a diversity of them, and this is what the existing framework looks like.
 
 ![Legacy web map tiling](imgs/tile_legacy.png)
 

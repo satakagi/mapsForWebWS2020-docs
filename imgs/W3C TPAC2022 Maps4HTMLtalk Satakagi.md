@@ -1,9 +1,9 @@
-# W3C TPAC2022 Maps4HTML meeting talk
+# W3C TPAC2022 Maps4HTML meeting talk [slide](W3C%20TPAC2022%20Maps4HTMLtalk%20Satakagi.pdf)
 This is the speech transcript for **[this slide [PDF]](W3C%20TPAC2022%20Maps4HTMLtalk%20Satakagi.pdf)**.
 
 ## Page1 : front cover
 
-**SVGMap in the Japanese Disaster Response Community**
+SVGMap in the Japanese Disaster Response Community
 
 ## Page2 : Japanese WebGIS/Mapping user community involved in disaster response
 

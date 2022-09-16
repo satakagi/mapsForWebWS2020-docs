@@ -1,4 +1,4 @@
-# W3C TPAC2022 Maps4HTML meeting talk [slide](W3C%20TPAC2022%20Maps4HTMLtalk%20Satakagi.pdf)
+# W3C TPAC2022 Maps4HTML meeting talk  -  [slide](W3C%20TPAC2022%20Maps4HTMLtalk%20Satakagi.pdf)
 This is the speech transcript for **[this slide [PDF]](W3C%20TPAC2022%20Maps4HTMLtalk%20Satakagi.pdf)**.
 
 ## Page1 : front cover

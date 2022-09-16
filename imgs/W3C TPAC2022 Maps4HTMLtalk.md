@@ -1,5 +1,5 @@
 # W3C TPAC2022 Maps4HTML meeting talk
-This is the speech transcript for [this slide](W3C TPAC2022 Maps4HTMLtalk.pptx).
+This is the speech transcript for [this slide](W3C%20TPAC2022%20Maps4HTMLtalk.pptx).
 
 ## Page1
 

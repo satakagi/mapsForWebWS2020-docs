@@ -3,6 +3,8 @@ This is the speech transcript for **[this slide [PDF]](W3C%20TPAC2022%20Maps4HTM
 
 ## Page1
 
+SVGMap in the Japanese Disaster Response Community
+
 ## Page2
 
 There is a community in Japan consisting of infrastructure providers, government organizations, and the academies that support them, all of whom need to utilize Web GIS to address disaster response. It's called the [Tokyo Metropolitan Resilience Project](https://forr.bosai.go.jp/e/).([video](https://www.youtube.com/watch?v=WaDHFjUKcks)) KDDI is also a member of this community.

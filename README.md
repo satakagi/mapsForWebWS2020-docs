@@ -12,3 +12,5 @@ Note that [this](position.md) is the backup of [position statement for the works
 
 
 * [Update report in October 2021](update202110.md)
+
+* [TPAC2022 Maps for HTML CG Meeting](imgs/W3C%20TPAC2022%20Maps4HTMLtalk%20Satakagi.md)

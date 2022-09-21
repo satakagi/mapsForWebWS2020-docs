@@ -1,5 +1,5 @@
 # W3C TPAC2022 Maps4HTML meeting talk  -  [slide](W3C%20TPAC2022%20Maps4HTMLtalk%20Satakagi.pdf)
-This is the speech transcript for **[this slide [PDF]](W3C%20TPAC2022%20Maps4HTMLtalk%20Satakagi.pdf)**.
+This is the speech transcript of **[this slide [PDF]](W3C%20TPAC2022%20Maps4HTMLtalk%20Satakagi.pdf)** contributed by Takagi at tpac2022 Maps for HTML CG meeting.
 
 * [Home Page of TPAC2022 Maps for HTML CG meeting](https://www.w3.org/events/meetings/e6f18f37-9fb8-4a33-b5ee-c1d5e0dc6d58)
 
